@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gauresh Kumar Chaubey — Galaxy Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --void:#00000f;--deep:#03001e;
+  --n1:#7b2ff7;--n2:#00d4ff;--n3:#ff006e;
+  --gold:#ffd700;--green:#10b981;
+  --text:#c8d6e5;--muted:#5a6c7d;
+  --card:rgba(20,10,50,0.75);--border:rgba(123,47,247,0.25);
+  --fd:'Orbitron',monospace;--fb:'Rajdhani',sans-serif;--fm:'JetBrains Mono',monospace;
+}
+body{background:var(--void);color:var(--text);font-family:var(--fb);overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;background:var(--n2);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:transform .1s}
+#cur-r{position:fixed;width:34px;height:34px;border:1px solid var(--n1);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:width .2s,height .2s,opacity .2s}
+
+/* CANVAS */
+#gc{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* NEBULA BG */
+.neb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:1;animation:drift 20s ease-in-out infinite}
+.nb1{width:600px;height:600px;background:radial-gradient(circle,rgba(123,47,247,.08),transparent 70%);top:-10%;left:-15%}
+.nb2{width:500px;height:500px;background:radial-gradient(circle,rgba(0,212,255,.06),transparent 70%);top:40%;right:-10%;animation-delay:-7s}
+.nb3{width:400px;height:400px;background:radial-gradient(circle,rgba(255,0,110,.05),transparent 70%);bottom:5%;left:30%;animation-delay:-14s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:1rem 3.5rem;background:rgba(0,0,10,.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--fd);font-size:.85rem;color:var(--n2);letter-spacing:.15em;text-decoration:none}
+.nav-links{display:flex;gap:1.6rem;list-style:none;align-items:center}
+.nav-links a{font-family:var(--fm);font-size:.6rem;color:var(--muted);text-decoration:none;letter-spacing:.14em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--n2)}
+.nav-resume{font-family:var(--fm);font-size:.6rem;background:transparent;color:var(--green);border:1px solid rgba(16,185,129,.4);padding:.45rem 1rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s,box-shadow .2s;font-weight:600;display:inline-flex;align-items:center;gap:.35rem}
+.nav-resume:hover{background:rgba(16,185,129,.1);box-shadow:0 0 14px rgba(16,185,129,.25)}
+.nav-hire{font-family:var(--fm);font-size:.6rem;background:linear-gradient(135deg,var(--n3),var(--n1));color:#fff;border:none;padding:.45rem 1.1rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s;font-weight:700}
+.nav-hire:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(255,0,110,.4)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.78rem 1.7rem;font-family:var(--fm);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-glow{background:linear-gradient(135deg,var(--n1),var(--n2));color:#fff;font-weight:600}
+.btn-glow:hover{box-shadow:0 8px 32px rgba(123,47,247,.5)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--n2);color:var(--n2)}
+.btn-lc{background:linear-gradient(135deg,#ffa116,#ff6b00);color:#000;font-weight:700}
+.btn-lc:hover{box-shadow:0 8px 28px rgba(255,161,22,.5)}
+.btn-hire{background:linear-gradient(135deg,var(--n3),var(--n1));color:#fff;font-weight:700}
+.btn-hire:hover{box-shadow:0 8px 28px rgba(255,0,110,.4)}
+.btn-dl{background:transparent;color:var(--green);border:1px solid rgba(16,185,129,.4);font-weight:600}
+.btn-dl:hover{background:rgba(16,185,129,.08);box-shadow:0 0 20px rgba(16,185,129,.2)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:7rem 3.5rem 3rem;position:relative;z-index:2}
+.hi{max-width:820px}
+.hero-tag{font-family:var(--fm);font-size:.65rem;color:var(--n2);letter-spacing:.25em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:.8rem;opacity:0;animation:fadeUp .8s .3s forwards}
+.hero-tag::before{content:'';width:30px;height:1px;background:var(--n2)}
+.hero h1{font-family:var(--fd);font-size:clamp(2.4rem,6vw,5.5rem);font-weight:900;line-height:1.05;margin-bottom:1rem;opacity:0;animation:fadeUp .8s .5s forwards}
+.glow{background:linear-gradient(135deg,var(--n2),var(--n1),var(--n3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(0,212,255,.4))}
+.hero-sub{font-size:1.1rem;color:var(--muted);line-height:1.8;max-width:540px;margin-bottom:2.5rem;opacity:0;animation:fadeUp .8s .7s forwards}
+.hero-btns{display:flex;gap:.8rem;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .9s forwards}
+.hero-stats{display:flex;gap:2.5rem;margin-top:3.5rem;padding-top:2rem;border-top:1px solid var(--border);opacity:0;animation:fadeUp .8s 1.1s forwards}
+.stat-n{font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--n2)}
+.stat-l{font-family:var(--fm);font-size:.55rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-top:.2rem}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* SECTIONS */
+section{padding:5.5rem 3.5rem;position:relative;z-index:2}
+.sec-tag{font-family:var(--fm);font-size:.6rem;color:var(--n2);letter-spacing:.22em;text-transform:uppercase;margin-bottom:.7rem;display:flex;align-items:center;gap:.6rem}
+.sec-tag::before{content:'';width:20px;height:1px;background:var(--n2)}
+.sec-title{font-family:var(--fd);font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:700;letter-spacing:-.01em;margin-bottom:3rem}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+/* Fallback: if JS doesn't fire (sandboxed preview), show content after delay */
+.reveal{animation:revealFallback 0.1s 1.5s forwards}
+@keyframes revealFallback{to{opacity:1;transform:none}}
+
+/* ABOUT */
+#about{background:linear-gradient(180deg,var(--void),var(--deep))}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
+.about-p{color:var(--muted);line-height:1.9;font-size:1.05rem}.about-p strong{color:var(--text)}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.8rem}
+.tag{font-family:var(--fm);font-size:.6rem;padding:.3rem .8rem;border:1px solid var(--border);color:var(--muted);letter-spacing:.07em;transition:border-color .2s,color .2s,background .2s}
+.tag:hover,.tag.on{border-color:var(--n2);color:var(--n2);background:rgba(0,212,255,.06)}
+.edu-card{background:var(--card);border:1px solid var(--border);padding:2rem;backdrop-filter:blur(12px)}
+.edu-card h3{font-family:var(--fd);font-size:.9rem;color:var(--n2);margin-bottom:1.5rem;letter-spacing:.1em}
+.edu-row{margin-bottom:1.3rem;padding-bottom:1.3rem;border-bottom:1px solid var(--border)}
+.edu-row:last-child{border:none;margin:0;padding:0}
+.edu-yr{font-family:var(--fm);font-size:.55rem;color:var(--n1);letter-spacing:.12em}
+.edu-nm{font-weight:600;font-size:.9rem;margin:.25rem 0}
+.edu-dt{font-size:.78rem;color:var(--muted)}
+
+/* PROJECTS */
+#projects{background:var(--deep)}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem}
+.proj-card{background:var(--card);border:1px solid var(--border);padding:2rem;position:relative;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s;backdrop-filter:blur(10px)}
+.proj-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(123,47,247,.12),transparent 60%);opacity:0;transition:opacity .3s}
+.proj-card:hover{transform:translateY(-5px);border-color:var(--n1);box-shadow:0 12px 40px rgba(123,47,247,.2)}
+.proj-card:hover::before{opacity:1}
+.proj-id{font-family:var(--fm);font-size:.55rem;color:var(--n1);letter-spacing:.18em;margin-bottom:1rem;opacity:.7}
+.proj-title{font-family:var(--fd);font-size:1rem;font-weight:700;margin-bottom:.8rem;letter-spacing:.03em}
+.proj-desc{font-size:.87rem;color:var(--muted);line-height:1.75;margin-bottom:1.5rem}
+.proj-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem}
+.ptag{font-family:var(--fm);font-size:.55rem;padding:.2rem .55rem;background:rgba(123,47,247,.12);color:var(--n1);border:1px solid rgba(123,47,247,.3);letter-spacing:.05em}
+.proj-actions{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
+.plink{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;transition:color .2s,background .2s;padding:.3rem .7rem;border:1px solid transparent}
+.plink:hover{color:var(--n2)}
+.plink.rl{color:var(--n2);border-color:rgba(0,212,255,.3);background:rgba(0,212,255,.06)}
+.plink.rl:hover{background:rgba(0,212,255,.12)}
+.live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 1.5s infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.proj-featured{grid-column:1/-1}
+.rembed{margin-top:1.5rem;background:rgba(0,0,15,.6);border:1px solid var(--border);overflow:hidden}
+.rbar{display:flex;align-items:center;gap:.7rem;padding:.5rem 1rem;background:rgba(20,10,50,.8);border-bottom:1px solid var(--border)}
+.wdots{display:flex;gap:.4rem}
+.wdot{width:8px;height:8px;border-radius:50%}
+.rurl{font-family:var(--fm);font-size:.58rem;color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rinput-row{display:flex;gap:.5rem;padding:.7rem 1rem;background:rgba(10,5,30,.9);border-bottom:1px solid var(--border)}
+.rinput-row input{flex:1;background:rgba(0,0,20,.5);border:1px solid var(--border);color:var(--text);font-family:var(--fm);font-size:.6rem;padding:.4rem .7rem;outline:none;transition:border-color .2s}
+.rinput-row input:focus{border-color:var(--n2)}
+.rinput-row button{background:linear-gradient(135deg,var(--n1),var(--n2));color:#fff;font-family:var(--fm);font-size:.6rem;font-weight:700;padding:.4rem .9rem;border:none;cursor:pointer;letter-spacing:.08em}
+.rph{height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;background:rgba(0,0,15,.5)}
+.rph p{font-family:var(--fm);font-size:.6rem;color:var(--muted);text-align:center;line-height:1.8}
+#rf{width:100%;height:180px;border:none;background:#fff;display:none}
+
+/* LEETCODE */
+#leetcode{background:linear-gradient(180deg,var(--deep),var(--void))}
+.lc-hero{display:flex;align-items:center;gap:1.5rem;margin-bottom:2.5rem}
+.lc-icon{width:50px;height:50px;background:linear-gradient(135deg,#ffa116,#ff6b00);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:900;font-size:1rem;color:#000;flex-shrink:0}
+.lc-head h2{font-family:var(--fd);font-size:1.5rem;font-weight:700}
+.lc-head span{font-family:var(--fm);font-size:.6rem;color:var(--muted);letter-spacing:.12em}
+.lc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:1.8rem}
+.lc-stat{background:var(--card);border:1px solid var(--border);padding:1.8rem 1rem;text-align:center;position:relative;overflow:hidden;backdrop-filter:blur(10px)}
+.lc-num{font-family:var(--fd);font-size:2rem;font-weight:700;margin-bottom:.3rem}
+.lc-lbl{font-family:var(--fm);font-size:.55rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase}
+.lc-bar{position:absolute;bottom:0;left:0;right:0;height:2px}
+.lc-stat.total .lc-num{color:var(--n2)}.lc-stat.total .lc-bar{background:linear-gradient(90deg,var(--n1),var(--n2))}
+.lc-stat.easy .lc-num{color:var(--green)}.lc-stat.easy .lc-bar{background:var(--green)}
+.lc-stat.med .lc-num{color:#ffa116}.lc-stat.med .lc-bar{background:#ffa116}
+.lc-stat.hard .lc-num{color:#ef4444}.lc-stat.hard .lc-bar{background:#ef4444}
+.lc-badges{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:2rem}
+.lbadge{font-family:var(--fm);font-size:.6rem;padding:.3rem .9rem;letter-spacing:.1em;border:1px solid}
+.lbadge.py{color:var(--gold);border-color:rgba(255,215,0,.3);background:rgba(255,215,0,.06)}
+.lbadge.sql{color:var(--n2);border-color:rgba(0,212,255,.3);background:rgba(0,212,255,.06)}
+.lbadge.ps{color:var(--green);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.06)}
+.lc-btns{display:flex;gap:1rem;flex-wrap:wrap}
+
+/* SKILLS */
+#skills{background:var(--void)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem}
+.sg{background:var(--card);border:1px solid var(--border);padding:1.6rem;backdrop-filter:blur(10px)}
+.sg-t{font-family:var(--fm);font-size:.55rem;color:var(--n1);letter-spacing:.18em;text-transform:uppercase;margin-bottom:1.2rem}
+.sk-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.9rem}
+.sk-name{font-size:.88rem}
+.sk-bar{width:70px;height:2px;background:rgba(255,255,255,.08);position:relative;overflow:hidden}
+.sk-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--n1),var(--n2));width:0;transition:width 1.4s ease}
+
+/* ACHIEVEMENTS */
+#achievements{background:var(--deep)}
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem}
+.ach-card{background:var(--card);border:1px solid var(--border);padding:1.8rem;position:relative;overflow:hidden;backdrop-filter:blur(10px)}
+.ach-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--n1),var(--n2))}
+.ach-ico{font-size:1.8rem;margin-bottom:.7rem}
+.ach-txt{font-size:.9rem;color:var(--muted);line-height:1.7}.ach-txt strong{color:var(--text)}
+
+/* CERTIFICATIONS */
+#certifications{background:var(--void)}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.2rem}
+.cert-card{background:var(--card);border:1px solid var(--border);padding:1.5rem;display:flex;align-items:flex-start;gap:.9rem;transition:border-color .2s;backdrop-filter:blur(10px)}
+.cert-card:hover{border-color:var(--n1)}
+.cert-ico{width:36px;height:36px;background:rgba(123,47,247,.15);border:1px solid rgba(123,47,247,.3);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.cert-nm{font-weight:600;font-size:.88rem;margin-bottom:.25rem}
+.cert-dt{font-family:var(--fm);font-size:.55rem;color:var(--muted);letter-spacing:.08em}
+
+/* HIRE SECTION */
+#hire{background:linear-gradient(135deg,rgba(123,47,247,.06),rgba(255,0,110,.04))}
+.hire-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;background:var(--card);border:1px solid var(--border);padding:3.5rem;backdrop-filter:blur(16px);position:relative;overflow:hidden}
+.hire-inner::after{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,0,110,.1),transparent 70%);pointer-events:none}
+.hire-h2{font-family:var(--fd);font-size:clamp(1.4rem,2.8vw,2.1rem);font-weight:700;line-height:1.2;margin-bottom:1rem}
+.hire-h2 span{color:var(--n3)}
+.hire-p{color:var(--muted);line-height:1.85;font-size:1rem;margin-bottom:1.8rem}
+.hire-chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2rem}
+.hchip{font-family:var(--fm);font-size:.57rem;padding:.3rem .8rem;border:1px solid rgba(255,0,110,.3);color:var(--n3);background:rgba(255,0,110,.06);letter-spacing:.07em}
+.hire-btns{display:flex;gap:.8rem;flex-wrap:wrap}
+.hire-right{display:flex;flex-direction:column;gap:.9rem}
+.hcard{background:rgba(0,0,20,.5);border:1px solid var(--border);padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;transition:border-color .2s,transform .2s}
+.hcard:hover{border-color:var(--n3);transform:translateX(4px)}
+.hcard-ico{font-size:1.4rem;flex-shrink:0}
+.hcard-title{font-weight:600;font-size:.88rem;margin-bottom:.18rem}
+.hcard-sub{font-family:var(--fm);font-size:.55rem;color:var(--muted);letter-spacing:.06em}
+
+/* CONTACT */
+#contact{background:var(--deep)}
+.contact-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:3.5rem;align-items:start}
+.cinfo-h{font-family:var(--fd);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;margin-bottom:1rem;line-height:1.2}
+.cinfo-h span{color:var(--n2)}
+.cinfo-p{color:var(--muted);line-height:1.85;margin-bottom:2rem;font-size:1rem}
+.clinks{display:flex;flex-direction:column;gap:.8rem}
+.clink{display:flex;align-items:center;gap:.9rem;text-decoration:none;color:var(--text);padding:.85rem 1.1rem;background:var(--card);border:1px solid var(--border);transition:border-color .2s,color .2s;backdrop-filter:blur(8px)}
+.clink:hover{border-color:var(--n2);color:var(--n2)}
+.clink-ico{width:30px;height:30px;background:rgba(0,212,255,.08);display:flex;align-items:center;justify-content:center;font-size:.85rem}
+.clink-lbl{font-family:var(--fm);font-size:.55rem;color:var(--muted);letter-spacing:.08em;display:block;margin-bottom:.1rem}
+.clink-val{font-size:.87rem}
+.sstatus{background:rgba(0,0,20,.5);border:1px solid var(--border);padding:1.6rem;margin-top:1.8rem}
+.stag{font-family:var(--fm);font-size:.55rem;color:var(--n2);letter-spacing:.18em;margin-bottom:1rem}
+.slive{display:flex;align-items:center;gap:.7rem;margin-bottom:1.4rem}
+.slive span{font-size:.93rem;font-weight:500}
+.sinfo{display:flex;flex-direction:column;gap:.55rem;font-family:var(--fm);font-size:.6rem;color:var(--muted);margin-bottom:1.4rem}
+.slabel{font-family:var(--fm);font-size:.55rem;color:var(--muted);letter-spacing:.12em;margin-bottom:.6rem}
+
+/* FORM */
+.cform-wrap{background:var(--card);border:1px solid var(--border);padding:2.4rem;backdrop-filter:blur(16px)}
+.fheader{font-family:var(--fm);font-size:.58rem;color:var(--n2);letter-spacing:.2em;margin-bottom:1.8rem}
+.ejnotice{background:rgba(255,161,22,.08);border:1px solid rgba(255,161,22,.3);padding:.9rem 1rem;margin-bottom:1.5rem;font-family:var(--fm);font-size:.57rem;color:#ffa116;line-height:1.8;display:none}
+.ejnotice a{color:var(--n2)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem}
+.fg{display:flex;flex-direction:column;gap:.45rem;margin-bottom:.9rem}
+.flabel{font-family:var(--fm);font-size:.56rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.finput,.fselect,.ftarea{background:rgba(0,0,20,.6);border:1px solid var(--border);color:var(--text);font-family:var(--fb);font-size:.95rem;padding:.72rem .95rem;outline:none;width:100%;transition:border-color .2s,box-shadow .2s}
+.finput:focus,.fselect:focus,.ftarea:focus{border-color:var(--n2);box-shadow:0 0 0 3px rgba(0,212,255,.07)}
+.fselect{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%235a6c7d' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .95rem center;cursor:pointer}
+.fselect option{background:#03001e;color:var(--text)}
+.ftarea{resize:vertical;min-height:110px;font-family:var(--fb)}
+.fsubmit{width:100%;padding:.88rem;font-family:var(--fm);font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;border:none;cursor:pointer;background:linear-gradient(135deg,var(--n1),var(--n2));color:#fff;transition:transform .2s,box-shadow .2s}
+.fsubmit:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(123,47,247,.5)}
+.fsubmit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.fnote{font-family:var(--fm);font-size:.54rem;color:var(--muted);text-align:center;margin-top:.75rem;letter-spacing:.06em}
+
+/* TOAST */
+#toast{position:fixed;bottom:2rem;right:2rem;z-index:1000;font-family:var(--fm);font-size:.64rem;letter-spacing:.1em;padding:.85rem 1.5rem;border:1px solid;transform:translateY(80px);opacity:0;transition:transform .4s ease,opacity .4s ease;pointer-events:none;max-width:340px;line-height:1.5}
+#toast.show{transform:translateY(0);opacity:1}
+#toast.success{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.4);color:var(--green)}
+#toast.error{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.4);color:#ef4444}
+
+/* HIRE MODAL */
+#hm{position:fixed;inset:0;z-index:800;display:flex;align-items:center;justify-content:center;background:rgba(0,0,10,.88);backdrop-filter:blur(14px);opacity:0;pointer-events:none;transition:opacity .35s ease}
+#hm.open{opacity:1;pointer-events:all}
+.mbox{background:linear-gradient(135deg,rgba(20,5,45,.98),rgba(3,0,30,.98));border:1px solid rgba(255,0,110,.3);padding:2.8rem;max-width:580px;width:92%;position:relative;transform:scale(.92) translateY(20px);transition:transform .35s ease;overflow-y:auto;max-height:90vh}
+#hm.open .mbox{transform:scale(1) translateY(0)}
+.mclose{position:absolute;top:1.1rem;right:1.1rem;background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;line-height:1;transition:color .2s}
+.mclose:hover{color:var(--n3)}
+.mtag{font-family:var(--fm);font-size:.57rem;color:var(--n3);letter-spacing:.22em;margin-bottom:.8rem}
+.mtitle{font-family:var(--fd);font-size:1.55rem;font-weight:700;margin-bottom:.8rem;line-height:1.2}
+.msub{color:var(--muted);font-size:.93rem;line-height:1.75;margin-bottom:1.8rem}
+.mservices{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.8rem}
+.ms{background:rgba(255,0,110,.06);border:1px solid rgba(255,0,110,.2);padding:.9rem}
+.ms-ico{font-size:1.1rem;margin-bottom:.35rem}
+.ms-title{font-weight:600;font-size:.85rem;margin-bottom:.18rem}
+.ms-sub{font-family:var(--fm);font-size:.54rem;color:var(--muted)}
+.mrates{background:rgba(0,0,20,.5);border:1px solid var(--border);padding:1.2rem;margin-bottom:1.8rem;display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;text-align:center}
+.mrate-n{font-family:var(--fd);font-size:1.4rem;color:var(--n3);font-weight:700}
+.mrate-l{font-family:var(--fm);font-size:.54rem;color:var(--muted);letter-spacing:.1em}
+.mbtns{display:flex;gap:.8rem;flex-wrap:wrap}
+
+/* FOOTER */
+footer{padding:1.8rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;background:var(--void)}
+footer p{font-family:var(--fm);font-size:.55rem;color:var(--muted);letter-spacing:.1em}
+
+/* RESPONSIVE */
+@media(max-width:900px){.hire-inner,.contact-wrap,.about-grid{grid-template-columns:1fr;gap:2rem}.mservices{grid-template-columns:1fr}.lc-stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){nav{padding:.9rem 1.2rem}.nav-links{gap:.8rem}section{padding:3.8rem 1.2rem}.hero{padding:6rem 1.2rem 2.5rem}.hero-stats{gap:1.5rem;flex-wrap:wrap}footer{flex-direction:column;gap:.6rem;text-align:center;padding:1.4rem}.frow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+<canvas id="gc"></canvas>
+<div class="neb nb1"></div>
+<div class="neb nb2"></div>
+<div class="neb nb3"></div>
+<div id="toast"></div>
+
+<!-- HIRE MODAL -->
+<div id="hm" role="dialog" aria-modal="true">
+  <div class="mbox">
+    <button class="mclose" onclick="closeHire()" aria-label="Close">&#10005;</button>
+    <div class="mtag">// OPEN FOR WORK</div>
+    <div class="mtitle">Let's Build Something<br><span style="color:var(--n3)">Stellar Together</span></div>
+    <p class="msub">I'm available for backend projects, internships, and freelance work. Here's what I can help you build:</p>
+    <div class="mservices">
+      <div class="ms"><div class="ms-ico">&#128279;</div><div class="ms-title">REST API Development</div><div class="ms-sub">Django &middot; DRF &middot; FastAPI &middot; JWT</div></div>
+      <div class="ms"><div class="ms-ico">&#128737;</div><div class="ms-title">Secure Auth Systems</div><div class="ms-sub">JWT &middot; OAuth &middot; RBAC &middot; Sessions</div></div>
+      <div class="ms"><div class="ms-ico">&#128451;</div><div class="ms-title">Database Architecture</div><div class="ms-sub">PostgreSQL &middot; MySQL &middot; ORM Design</div></div>
+      <div class="ms"><div class="ms-ico">&#129302;</div><div class="ms-title">AI / CV Integration</div><div class="ms-sub">OpenCV &middot; MediaPipe &middot; Python AI</div></div>
+    </div>
+    <div class="mrates">
+      <div><div class="mrate-n">&#8377;500+</div><div class="mrate-l">PER HOUR</div></div>
+      <div><div class="mrate-n">&#8377;5K+</div><div class="mrate-l">PER PROJECT</div></div>
+      <div><div class="mrate-n">3&ndash;7</div><div class="mrate-l">DAYS DELIVERY</div></div>
+    </div>
+    <div class="mbtns">
+      <a href="mailto:gaureshchaubey26@gmail.com?subject=Hiring%20Enquiry" class="btn btn-hire">&#9993; Email Me Directly</a>
+      <button class="btn btn-ghost" onclick="closeHire();setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),300)">&#128221; Send a Message</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">Gauresh</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#leetcode">LeetCode</a></li>
+    <li><a href="#hire">Work With Me</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li>
+      <button class="nav-resume" onclick="downloadCV()">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Resume
+      </button>
+    </li>
+    <li><button class="nav-hire" onclick="openHire()">&#9889; Hire Me</button></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hi">
+    <div class="hero-tag">Backend Developer &middot; Python &middot; Django &middot; API Architect</div>
+    <h1>Gauresh Kumar<br><span class="glow">Chaubey</span></h1>
+    <p class="hero-sub">Building secure, scalable backend systems &mdash; from gesture-controlled AI to production-grade REST APIs. Exploring the universe of code from Kanpur, India.</p>
+    <div class="hero-btns">
+      <button class="btn btn-hire" onclick="openHire()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+        Hire Me
+      </button>
+      <a href="#projects" class="btn btn-glow">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Explore Projects
+      </a>
+      <a href="https://leetcode.com/u/Gauresh83/" target="_blank" rel="noopener" class="btn btn-lc">LC &mdash; LeetCode</a>
+      <button class="btn btn-dl" onclick="downloadCV()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download CV
+      </button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-n">250+</div><div class="stat-l">DSA Solved</div></div>
+      <div><div class="stat-n">3+</div><div class="stat-l">Projects</div></div>
+      <div><div class="stat-n">7.85</div><div class="stat-l">CGPA</div></div>
+      <div><div class="stat-n">6+</div><div class="stat-l">Certifications</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-tag">01 &mdash; About Me</div>
+  <div class="sec-title">Who I Am</div>
+  <div class="about-grid reveal">
+    <div>
+      <p class="about-p">I'm a <strong>Backend Developer</strong> and 2nd-year CSE student at Pranveer Singh Institute of Technology, Kanpur. I specialize in crafting robust, secure, scalable systems using <strong>Python, Django &amp; DRF</strong>.<br><br>From real-time <strong>gesture recognition AI</strong> to JWT-secured production APIs, I love engineering solutions to real problems. Driven by clean architecture, elegant code, and systems that scale.</p>
+      <div class="tags">
+        <span class="tag on">Python</span><span class="tag on">Django</span><span class="tag on">DRF</span>
+        <span class="tag on">JWT Auth</span><span class="tag">FastAPI</span><span class="tag">OpenCV</span>
+        <span class="tag">MediaPipe</span><span class="tag">Docker</span><span class="tag">PostgreSQL</span>
+        <span class="tag">MySQL</span><span class="tag">C++</span><span class="tag">JavaScript</span>
+      </div>
+    </div>
+    <div class="edu-card">
+      <h3>&#128640; Education</h3>
+      <div class="edu-row"><div class="edu-yr">2023 &mdash; 2027</div><div class="edu-nm">B.Tech &mdash; Computer Science Engineering</div><div class="edu-dt">Pranveer Singh Institute of Technology, Kanpur</div><div class="edu-dt" style="color:var(--n2);margin-top:.3rem">CGPA: 7.85</div></div>
+      <div class="edu-row"><div class="edu-yr">2023 &middot; Class XII &middot; CBSE</div><div class="edu-nm">Doon International School, Kanpur</div><div class="edu-dt">Intermediate &mdash; 73%</div></div>
+      <div class="edu-row"><div class="edu-yr">2021 &middot; Class X &middot; CBSE</div><div class="edu-nm">Doon International School, Kanpur</div><div class="edu-dt">High School &mdash; 93%</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background:var(--deep)">
+  <div class="sec-tag">02 &mdash; Work</div>
+  <div class="sec-title">Featured Projects</div>
+  <div class="proj-grid">
+    <div class="proj-card reveal">
+      <div class="proj-id">PROJECT / 001 &middot; AUG&ndash;OCT 2025</div>
+      <div class="proj-title">Sky Pointer</div>
+      <p class="proj-desc">Gesture-controlled virtual mouse with integrated voice assistant. Real-time hand tracking using OpenCV &amp; MediaPipe achieving 95% accuracy. 20+ system voice commands.</p>
+      <div class="proj-tags"><span class="ptag">Python</span><span class="ptag">OpenCV</span><span class="ptag">MediaPipe</span><span class="ptag">Voice AI</span></div>
+      <div class="proj-actions">
+        <a href="https://github.com/Gauresh83/Sky-Pointer" target="_blank" rel="noopener" class="plink">&#128279; GitHub</a>
+      </div>
+    </div>
+    <div class="proj-card reveal">
+      <div class="proj-id">PROJECT / 002 &middot; OCT&ndash;NOV 2025</div>
+      <div class="proj-title">Personal Portfolio Website</div>
+      <p class="proj-desc">Modern responsive portfolio with animated UI components, dynamic project showcases, and a Python-powered contact form delivering real-time email notifications.</p>
+      <div class="proj-tags"><span class="ptag">Python</span><span class="ptag">JavaScript</span><span class="ptag">CSS</span><span class="ptag">Email API</span></div>
+      <div class="proj-actions">
+        <a href="https://github.com/Gauresh83/Portfolio" target="_blank" rel="noopener" class="plink">&#128279; GitHub</a>
+      </div>
+    </div>
+    <div class="proj-card proj-featured reveal">
+      <div class="proj-id">PROJECT / 003 &middot; 2026 &ndash; PRESENT &middot; &#11088; FEATURED</div>
+      <div class="proj-title">Django REST API Backend</div>
+      <p class="proj-desc">Production-grade REST API with Django &amp; DRF. JWT authentication, role-based access control over 15+ endpoints, PostgreSQL, and Docker containerization.</p>
+      <div class="proj-tags"><span class="ptag">Django</span><span class="ptag">DRF</span><span class="ptag">JWT</span><span class="ptag">PostgreSQL</span><span class="ptag">RBAC</span><span class="ptag">Docker</span></div>
+      <div class="proj-actions" style="margin-bottom:1.2rem">
+        <a href="https://github.com/Gauresh83" target="_blank" rel="noopener" class="plink">&#128279; GitHub</a>
+        <a href="#" id="rextlink" target="_blank" rel="noopener" class="plink rl" style="display:none">
+          <span class="live-dot"></span> Open Live Site
+        </a>
+      </div>
+      <div class="rembed">
+        <div class="rbar">
+          <div class="wdots"><div class="wdot" style="background:#ef4444"></div><div class="wdot" style="background:#ffa116"></div><div class="wdot" style="background:#10b981"></div></div>
+          <div class="rurl" id="rurldisp">Enter your Render URL below to preview live project</div>
+        </div>
+        <div class="rinput-row">
+          <input id="rinput" type="text" placeholder="https://your-app.onrender.com"/>
+          <button onclick="loadRender()">&#9654; LAUNCH</button>
+        </div>
+        <div id="rph" class="rph"><p>&#128640; Paste your Render deployment URL above<br>to embed a live preview right here</p></div>
+        <iframe id="rf" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-popups" title="Live Preview"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEETCODE -->
+<section id="leetcode">
+  <div class="sec-tag">03 &mdash; DSA</div>
+  <div class="sec-title">LeetCode Journey</div>
+  <div class="lc-hero reveal">
+    <div class="lc-icon">LC</div>
+    <div class="lc-head"><h2>250+ Problems Solved</h2><span>@Gauresh83 &middot; Active Problem Solver</span></div>
+  </div>
+  <div class="lc-stats reveal">
+    <div class="lc-stat total"><div class="lc-num">250+</div><div class="lc-lbl">Total</div><div class="lc-bar"></div></div>
+    <div class="lc-stat easy"><div class="lc-num">100+</div><div class="lc-lbl">Easy</div><div class="lc-bar"></div></div>
+    <div class="lc-stat med"><div class="lc-num">120+</div><div class="lc-lbl">Medium</div><div class="lc-bar"></div></div>
+    <div class="lc-stat hard"><div class="lc-num">30+</div><div class="lc-lbl">Hard</div><div class="lc-bar"></div></div>
+  </div>
+  <div class="lc-badges reveal">
+    <span class="lbadge py">&#11088; Python Badge</span>
+    <span class="lbadge sql">&#11088; SQL Badge</span>
+    <span class="lbadge ps">&#11088; Problem Solving</span>
+  </div>
+  <div class="lc-btns reveal">
+    <a href="https://leetcode.com/u/Gauresh83/" target="_blank" rel="noopener" class="btn btn-lc">Visit My LeetCode Profile &#8594;</a>
+    <a href="https://www.hackerrank.com/profile/gaureshchaubey26" target="_blank" rel="noopener" class="btn btn-ghost">HackerRank Profile &#8594;</a>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="background:var(--void)">
+  <div class="sec-tag">04 &mdash; Expertise</div>
+  <div class="sec-title">Technical Skills</div>
+  <div class="skills-grid reveal">
+    <div class="sg"><div class="sg-t">Languages</div>
+      <div class="sk-row"><span class="sk-name">Python</span><div class="sk-bar"><div class="sk-fill" data-w="93%"></div></div></div>
+      <div class="sk-row"><span class="sk-name">C / C++</span><div class="sk-bar"><div class="sk-fill" data-w="74%"></div></div></div>
+      <div class="sk-row"><span class="sk-name">SQL</span><div class="sk-bar"><div class="sk-fill" data-w="82%"></div></div></div>
+      <div class="sk-row"><span class="sk-name">JavaScript</span><div class="sk-bar"><div class="sk-fill" data-w="60%"></div></div></div>
+    </div>
+    <div class="sg"><div class="sg-t">Frameworks</div>
+      <div class="sk-row"><span class="sk-name">Django</span><div class="sk-bar"><div class="sk-fill" data-w="88%"></div></div></div>
+      <div class="sk-row"><span class="sk-name">DRF</span><div class="sk-bar"><div class="sk-fill" data-w="85%"></div></div></div>
+      <div class="sk-row"><span class="sk-name">FastAPI</span><div class="sk-bar"><div class="sk-fill" data-w="70%"></div></div></div>
+      <div class="sk-row"><span class="sk-name">OpenCV</span><div class="sk-bar"><div class="sk-fill" data-w="78%"></div></div></div>
+    </div>
+    <div class="sg"><div class="sg-t">Backend &amp; DB</div>
+      <div class="sk-row"><span class="sk-name">REST APIs</span><div class="sk-bar"><div class="sk-fill" data-w="90%"></div></div></div>
+      <div class="sk-row"><span class="sk-name">JWT / Auth</span><div class="sk-bar"><div class="sk-fill" data-w="85%"></div></div></div>
+      <div class="sk-row"><span class="sk-name">PostgreSQL</span><div class="sk-bar"><div class="sk-fill" data-w="78%"></div></div></div>
+      <div class="sk-row"><span class="sk-name">MySQL</span><div class="sk-bar"><div class="sk-fill" data-w="80%"></div></div></div>
+    </div>
+    <div class="sg"><div class="sg-t">Tools</div>
+      <div class="sk-row"><span class="sk-name">Git / GitHub</span><div class="sk-bar"><div class="sk-fill" data-w="88%"></div></div></div>
+      <div class="sk-row"><span class="sk-name">Docker</span><div class="sk-bar"><div class="sk-fill" data-w="66%"></div></div></div>
+      <div class="sk-row"><span class="sk-name">ORM</span><div class="sk-bar"><div class="sk-fill" data-w="83%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements" style="background:var(--deep)">
+  <div class="sec-tag">05 &mdash; Wins</div>
+  <div class="sec-title">Achievements</div>
+  <div class="ach-grid reveal">
+    <div class="ach-card"><div class="ach-ico">&#127942;</div><div class="ach-txt">Solved <strong>250+ DSA problems</strong> on LeetCode &mdash; arrays, trees, graphs, DP, and beyond.</div></div>
+    <div class="ach-card"><div class="ach-ico">&#129351;</div><div class="ach-txt">HackerRank badges in <strong>Python, SQL, and Problem Solving</strong>.</div></div>
+    <div class="ach-card"><div class="ach-ico">&#127919;</div><div class="ach-txt">Gesture recognition system with <strong>95% real-time accuracy</strong> using computer vision.</div></div>
+    <div class="ach-card"><div class="ach-ico">&#128272;</div><div class="ach-txt">Secured <strong>15+ REST API endpoints</strong> with JWT and role-based access control.</div></div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications" style="background:var(--void)">
+  <div class="sec-tag">06 &mdash; Credentials</div>
+  <div class="sec-title">Certifications</div>
+  <div class="cert-grid reveal">
+    <div class="cert-card"><div class="cert-ico">&#128013;</div><div><div class="cert-nm">Python &mdash; Infosys Springboard</div><div class="cert-dt">PROGRAMMING &middot; ADVANCED PYTHON</div></div></div>
+    <div class="cert-card"><div class="cert-ico">&#128451;</div><div><div class="cert-nm">SQL &mdash; Infosys Springboard</div><div class="cert-dt">DATABASE DESIGN &middot; QUERIES</div></div></div>
+    <div class="cert-card"><div class="cert-ico">&#9749;</div><div><div class="cert-nm">Java &mdash; Infosys Springboard</div><div class="cert-dt">OOP &middot; CORE JAVA</div></div></div>
+    <div class="cert-card"><div class="cert-ico">&#127760;</div><div><div class="cert-nm">HTML &amp; CSS &mdash; Infosys Springboard</div><div class="cert-dt">WEB FUNDAMENTALS</div></div></div>
+    <div class="cert-card"><div class="cert-ico">&#11088;</div><div><div class="cert-nm">Python &amp; SQL &mdash; HackerRank</div><div class="cert-dt">VERIFIED PROFICIENCY BADGE</div></div></div>
+    <div class="cert-card"><div class="cert-ico">&#128737;</div><div><div class="cert-nm">Cyber Simulation &mdash; Deloitte</div><div class="cert-dt">CYBERSECURITY &middot; THREAT ANALYSIS</div></div></div>
+  </div>
+</section>
+
+<!-- HIRE SECTION -->
+<section id="hire">
+  <div class="sec-tag">07 &mdash; Opportunities</div>
+  <div class="sec-title">Work With Me</div>
+  <div class="hire-inner reveal">
+    <div>
+      <div class="hire-h2">Ready to Build Something<br><span>Extraordinary?</span></div>
+      <p class="hire-p">I'm actively looking for backend development opportunities, internships, and freelance projects. Whether you need a secure REST API, a full-stack Django app, or an AI-powered tool &mdash; I deliver clean, production-ready code.</p>
+      <div class="hire-chips">
+        <span class="hchip">&#10003; REST API Development</span>
+        <span class="hchip">&#10003; Django Full-Stack</span>
+        <span class="hchip">&#10003; Database Architecture</span>
+        <span class="hchip">&#10003; JWT Auth Systems</span>
+        <span class="hchip">&#10003; AI/CV Integration</span>
+        <span class="hchip">&#10003; Docker Deployment</span>
+      </div>
+      <div class="hire-btns">
+        <button class="btn btn-hire" onclick="openHire()">View Hire Details</button>
+        <button class="btn btn-dl" onclick="downloadCV()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Resume
+        </button>
+      </div>
+    </div>
+    <div class="hire-right">
+      <div class="hcard"><div class="hcard-ico">&#127891;</div><div><div class="hcard-title">Currently Studying</div><div class="hcard-sub">B.TECH CSE &middot; PSIT KANPUR &middot; 2023&ndash;2027</div></div></div>
+      <div class="hcard"><div class="hcard-ico">&#128188;</div><div><div class="hcard-title">Open For</div><div class="hcard-sub">INTERNSHIP &middot; FREELANCE &middot; PART-TIME</div></div></div>
+      <div class="hcard"><div class="hcard-ico">&#9889;</div><div><div class="hcard-title">Primary Stack</div><div class="hcard-sub">PYTHON &middot; DJANGO &middot; DRF &middot; POSTGRESQL</div></div></div>
+      <div class="hcard"><div class="hcard-ico">&#127757;</div><div><div class="hcard-title">Work Mode</div><div class="hcard-sub">REMOTE &middot; ON-SITE KANPUR &middot; HYBRID</div></div></div>
+      <div class="hcard"><div class="hcard-ico">&#9201;</div><div><div class="hcard-title">Response Time</div><div class="hcard-sub">WITHIN 24 HOURS &middot; ALL ENQUIRIES</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--deep)">
+  <div class="sec-tag">08 &mdash; Let's Talk</div>
+  <div class="sec-title">Send Me a Message</div>
+  <div class="contact-wrap reveal">
+    <div>
+      <div class="cinfo-h">Got a project in<br><span>the cosmos</span>?</div>
+      <p class="cinfo-p">Fill the form and your message lands directly in my inbox. Every message gets a reply within 24 hours.</p>
+      <div class="clinks">
+        <a href="mailto:gaureshchaubey26@gmail.com" class="clink"><div class="clink-ico">&#9993;</div><div><span class="clink-lbl">EMAIL</span><span class="clink-val">gaureshchaubey26@gmail.com</span></div></a>
+        <a href="https://www.linkedin.com/in/gauresh-chaubey-2b643a345" target="_blank" rel="noopener" class="clink"><div class="clink-ico">&#128188;</div><div><span class="clink-lbl">LINKEDIN</span><span class="clink-val">gauresh-chaubey-2b643a345</span></div></a>
+        <a href="https://github.com/Gauresh83" target="_blank" rel="noopener" class="clink"><div class="clink-ico">&#128028;</div><div><span class="clink-lbl">GITHUB</span><span class="clink-val">github.com/Gauresh83</span></div></a>
+        <a href="tel:+918317002832" class="clink"><div class="clink-ico">&#128222;</div><div><span class="clink-lbl">PHONE</span><span class="clink-val">+91 8317002832</span></div></a>
+      </div>
+      <div class="sstatus">
+        <div class="stag">// AVAILABILITY STATUS</div>
+        <div class="slive"><span class="live-dot"></span><span>Open to opportunities</span></div>
+        <div class="sinfo">
+          <span>&#128205; Kanpur, Uttar Pradesh, India</span>
+          <span>&#127891; B.Tech CSE &middot; 2nd Year (2023&ndash;2027)</span>
+          <span>&#128161; Backend &middot; APIs &middot; AI Systems</span>
+          <span>&#128336; Internships &amp; Freelance &middot; Remote OK</span>
+        </div>
+        <div class="slabel">PREFERRED STACK</div>
+        <div class="tags" style="margin:0">
+          <span class="tag on" style="font-size:.57rem">Python</span>
+          <span class="tag on" style="font-size:.57rem">Django</span>
+          <span class="tag on" style="font-size:.57rem">DRF</span>
+          <span class="tag" style="font-size:.57rem">PostgreSQL</span>
+          <span class="tag" style="font-size:.57rem">Docker</span>
+        </div>
+      </div>
+    </div>
+    <div class="cform-wrap">
+      <div class="fheader">// DIRECT MESSAGE &rarr; REACHES gaureshchaubey26@gmail.com</div>
+      <div class="ejnotice" id="ejnotice">
+        &#9889; <strong>ONE-TIME SETUP (5 min):</strong><br>
+        1. Go to <a href="https://www.emailjs.com" target="_blank">emailjs.com</a> and sign up free<br>
+        2. Add Email Service &rarr; connect Gmail (gaureshchaubey26@gmail.com)<br>
+        3. Create Template with variables: from_name, from_email, subject, message, type<br>
+        4. Replace the 3 placeholder values in the script tag below
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flabel" for="fn">Your Name *</label><input class="finput" type="text" id="fn" placeholder="John Doe" required></div>
+        <div class="fg"><label class="flabel" for="fe">Your Email *</label><input class="finput" type="email" id="fe" placeholder="john@example.com" required></div>
+      </div>
+      <div class="fg"><label class="flabel" for="fs">Subject *</label><input class="finput" type="text" id="fs" placeholder="Project enquiry / Internship offer" required></div>
+      <div class="fg">
+        <label class="flabel" for="ft">Enquiry Type</label>
+        <select class="fselect" id="ft">
+          <option>General Enquiry</option>
+          <option>Internship Offer</option>
+          <option>Freelance Project</option>
+          <option>Full-Time Job</option>
+          <option>Collaboration / Open Source</option>
+          <option>Feedback</option>
+        </select>
+      </div>
+      <div class="fg"><label class="flabel" for="fm">Message *</label><textarea class="ftarea" id="fm" rows="5" placeholder="Tell me about your project, requirements, timeline..." required></textarea></div>
+      <button class="fsubmit" id="fsub" onclick="sendEmail()"><span id="fbtn">&#128640; Send Message to Gauresh</span></button>
+      <p class="fnote">&#9993; Goes directly to gaureshchaubey26@gmail.com &middot; Reply within 24 hrs</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&#169; 2025&ndash;2026 GAURESH KUMAR CHAUBEY &middot; ALL RIGHTS RESERVED</p>
+  <div style="display:flex;gap:1rem;align-items:center">
+    <button class="btn btn-dl" style="padding:.4rem .9rem;font-size:.54rem" onclick="downloadCV()">&#8595; Download CV</button>
+    <p>KANPUR &middot; UP &middot; INDIA &#127756;</p>
+  </div>
+</footer>
+
+<script>
+/* ── EMAILJS CONFIG ── */
+const EJ_PUB = 'YOUR_PUBLIC_KEY';
+const EJ_SVC = 'YOUR_SERVICE_ID';
+const EJ_TPL = 'YOUR_TEMPLATE_ID';
+const configured = EJ_PUB !== 'YOUR_PUBLIC_KEY';
+if (!configured) { document.getElementById('ejnotice').style.display = 'block'; }
+else { emailjs.init({ publicKey: EJ_PUB }); }
+
+async function sendEmail() {
+  const name  = document.getElementById('fn').value.trim();
+  const email = document.getElementById('fe').value.trim();
+  const subj  = document.getElementById('fs').value.trim();
+  const type  = document.getElementById('ft').value;
+  const msg   = document.getElementById('fm').value.trim();
+  if (!name || !email || !subj || !msg) { showToast('Please fill all required fields', 'error'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Enter a valid email address', 'error'); return; }
+  if (!configured) { showToast('EmailJS not yet configured — see yellow notice', 'error'); return; }
+  const btn = document.getElementById('fsub'), txt = document.getElementById('fbtn');
+  btn.disabled = true; txt.textContent = 'Sending...';
+  try {
+    await emailjs.send(EJ_SVC, EJ_TPL, { from_name: name, from_email: email, subject: subj, type: type, message: msg, to_email: 'gaureshchaubey26@gmail.com' });
+    showToast('Message sent! Gauresh will reply within 24 hrs', 'success');
+    ['fn','fe','fs','fm'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('ft').selectedIndex = 0;
+  } catch(e) {
+    console.error(e);
+    showToast('Send failed. Email gaureshchaubey26@gmail.com directly', 'error');
+  } finally {
+    btn.disabled = false; txt.textContent = 'Send Message to Gauresh';
+  }
+}
+
+/* ── TOAST ── */
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'show ' + type;
+  setTimeout(() => t.className = '', 5000);
+}
+
+/* ── HIRE MODAL ── */
+function openHire() { document.getElementById('hm').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeHire() { document.getElementById('hm').classList.remove('open'); document.body.style.overflow = ''; }
+document.getElementById('hm').addEventListener('click', e => { if (e.target === document.getElementById('hm')) closeHire(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeHire(); });
+
+/* ── DOWNLOAD CV ── */
+function downloadCV() {
+  const cv = [
+    'GAURESH KUMAR CHAUBEY',
+    'Backend Developer | Python & Django Engineer',
+    '=============================================',
+    'Kanpur, Uttar Pradesh | +91-8317002832',
+    'gaureshchaubey26@gmail.com',
+    'linkedin.com/in/gauresh-chaubey-2b643a345',
+    'github.com/Gauresh83',
+    '',
+    'PROFESSIONAL SUMMARY',
+    '--------------------',
+    'Backend-focused Python and Django Developer with a strong foundation in RESTful',
+    'API development, database design, and AI-powered applications.',
+    '',
+    'EDUCATION',
+    '---------',
+    'B.Tech - Computer Science Engineering (2023-2027)',
+    'Pranveer Singh Institute of Technology, Kanpur | CGPA: 7.85',
+    '',
+    'Intermediate Class XII - CBSE (2023)',
+    'Doon International School, Kanpur | 73%',
+    '',
+    'High School Class X - CBSE (2021)',
+    'Doon International School, Kanpur | 93%',
+    '',
+    'TECHNICAL SKILLS',
+    '----------------',
+    'Languages  : Python, C, C++, SQL, JavaScript',
+    'Frameworks : Django, Django REST Framework, FastAPI, OpenCV, MediaPipe',
+    'Databases  : PostgreSQL, MySQL, SQLite',
+    'Backend    : RESTful APIs, JWT, ORM, API Security, RBAC',
+    'Tools      : Git, GitHub, Docker',
+    '',
+    'PROJECTS',
+    '--------',
+    '1. Sky Pointer - Gesture-Controlled Virtual Mouse (Aug-Oct 2025)',
+    '   - Real-time gesture recognition using OpenCV & MediaPipe (95% accuracy)',
+    '   - Python voice assistant with 20+ system commands',
+    '   - GitHub: github.com/Gauresh83/Sky-Pointer',
+    '',
+    '2. Personal Portfolio Website (Oct-Nov 2025)',
+    '   - Modern responsive portfolio with animated UI & real email contact form',
+    '   - GitHub: github.com/Gauresh83/Portfolio',
+    '',
+    '3. Django REST API Backend (2026-Present)',
+    '   - Secure REST APIs with JWT auth & RBAC (15+ endpoints)',
+    '   - PostgreSQL integration & Docker containerization',
+    '',
+    'ACHIEVEMENTS',
+    '------------',
+    '- 250+ DSA problems solved on LeetCode',
+    '- HackerRank badges: Python, SQL, Problem Solving',
+    '',
+    'CERTIFICATIONS',
+    '--------------',
+    '- Python, SQL, Java, HTML, CSS - Infosys Springboard',
+    '- Python, SQL - HackerRank (Verified)',
+    '- Cyber Job Simulation - Deloitte',
+    '',
+    'SOFT SKILLS',
+    '-----------',
+    'Strategic Problem Resolution | Analytical Reasoning',
+    'Professional Communication | Cross-Functional Collaboration'
+  ].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([cv], { type: 'text/plain' }));
+  a.download = 'Gauresh_Kumar_Chaubey_CV.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  showToast('CV downloaded!', 'success');
+}
+
+/* ── GALAXY CANVAS ── */
+const canvas = document.getElementById('gc');
+const ctx = canvas.getContext('2d');
+let W, H, stars = [], nebs = [];
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+const rr = (a, b) => a + Math.random() * (b - a);
+function init() {
+  stars = Array.from({ length: 300 }, () => ({
+    x: Math.random() * W, y: Math.random() * H,
+    r: Math.random() * 1.2 + 0.1,
+    o: Math.random() * 0.8 + 0.1,
+    sp: Math.random() * 0.003 + 0.001,
+    ph: Math.random() * Math.PI * 2
+  }));
+  const cc = ['rgba(123,47,247,', 'rgba(0,212,255,', 'rgba(255,0,110,'];
+  nebs = Array.from({ length: 16 }, () => ({
+    x: Math.random() * W, y: Math.random() * H,
+    r: rr(60, 170),
+    c: cc[Math.floor(Math.random() * 3)],
+    o: rr(0.015, 0.05),
+    vx: rr(-0.15, 0.15), vy: rr(-0.1, 0.1)
+  }));
+}
+init();
+let t = 0;
+(function draw() {
+  ctx.clearRect(0, 0, W, H);
+  nebs.forEach(n => {
+    n.x += n.vx; n.y += n.vy;
+    if (n.x < -n.r) n.x = W + n.r; if (n.x > W + n.r) n.x = -n.r;
+    if (n.y < -n.r) n.y = H + n.r; if (n.y > H + n.r) n.y = -n.r;
+    const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r);
+    g.addColorStop(0, n.c + n.o + ')'); g.addColorStop(1, n.c + '0)');
+    ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+    ctx.fillStyle = g; ctx.fill();
+  });
+  t += 0.016;
+  stars.forEach(s => {
+    const p = s.o * (0.5 + 0.5 * Math.sin(t * s.sp * 60 + s.ph));
+    ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,255,255,' + p + ')'; ctx.fill();
+  });
+  requestAnimationFrame(draw);
+})();
+
+/* ── CURSOR ── */
+const cur = document.getElementById('cur');
+const curR = document.getElementById('cur-r');
+let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+let rx = mx, ry = my;
+cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+curR.style.left = rx + 'px'; curR.style.top = ry + 'px';
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+});
+(function loop() {
+  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+  curR.style.left = rx + 'px'; curR.style.top = ry + 'px';
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a, button, input, select, textarea').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cur.style.transform = 'translate(-50%,-50%) scale(2.2)';
+    curR.style.width = '50px'; curR.style.height = '50px'; curR.style.opacity = '.3';
+  });
+  el.addEventListener('mouseleave', () => {
+    cur.style.transform = 'translate(-50%,-50%) scale(1)';
+    curR.style.width = '34px'; curR.style.height = '34px'; curR.style.opacity = '.5';
+  });
+});
+
+/* ── SCROLL REVEAL ── */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+}, { threshold: 0.05 });
+document.querySelectorAll('.reveal').forEach(r => ro.observe(r));
+
+// Immediate fallback — reveal everything visible in viewport on load
+setTimeout(() => {
+  document.querySelectorAll('.reveal').forEach(r => {
+    const rect = r.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 200) r.classList.add('in');
+  });
+}, 100);
+
+/* ── SKILL BARS ── */
+const bo = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.style.width = e.target.dataset.w; bo.unobserve(e.target); } });
+}, { threshold: 0.5 });
+document.querySelectorAll('.sk-fill').forEach(b => { b.style.width = '0'; bo.observe(b); });
+// Fallback: trigger bars visible on load
+setTimeout(() => {
+  document.querySelectorAll('.sk-fill').forEach(b => {
+    const rect = b.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 200) b.style.width = b.dataset.w;
+  });
+}, 400);
+
+/* ── RENDER EMBED ── */
+function loadRender() {
+  let url = document.getElementById('rinput').value.trim();
+  if (!url) return;
+  if (!url.startsWith('http')) url = 'https://' + url;
+  document.getElementById('rurldisp').textContent = url.replace(/^https?:\/\//, '');
+  const fr = document.getElementById('rf');
+  fr.src = url; fr.style.display = 'block';
+  document.getElementById('rph').style.display = 'none';
+  const el = document.getElementById('rextlink');
+  el.href = url; el.style.display = 'inline-flex';
+}
+document.getElementById('rinput').addEventListener('keydown', e => { if (e.key === 'Enter') loadRender(); });
+
+/* ── MOUSE PARALLAX ── */
+document.addEventListener('mousemove', e => {
+  canvas.style.transform = 'translate(' + ((e.clientX / W - 0.5) * 20) + 'px,' + ((e.clientY / H - 0.5) * 14) + 'px)';
+});
+</script>
+</body>
+</html>
