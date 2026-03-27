@@ -8,7 +8,7 @@ A modern, responsive **developer portfolio website** showcasing my projects, ski
 
 ## 🔗 Live Demo
 
-👉 https://your-username.github.io/repo-name/
+👉 (https://my-portfolio-ceq3.vercel.app)
 
 ---
 
